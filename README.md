@@ -1,6 +1,5 @@
-# HellBender
+# ![HellBenderLogo](doc/images/Logo.png) HellBender
 
-![HellBenderLogo](doc/images/Logo.png)
 A modular device abstraction framework.
 
 ## Building

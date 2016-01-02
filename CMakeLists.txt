@@ -17,6 +17,8 @@ if(cmake_build_type_lower MATCHES "debug")
     # debug defines
 endif()
 
+add_definitions(-std=c++11)
+
 if (NOT NO_TESTS)
     include(CTest)
     enable_testing()
