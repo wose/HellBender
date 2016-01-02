@@ -1,6 +1,6 @@
 # HellBender
 
-![Image of Yaktocat](doc/images/yaktocat.png)
+![HellBenderLogo](doc/images/Logo.png)
 A modular device abstraction framework.
 
 ## Building
