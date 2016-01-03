@@ -27,4 +27,5 @@ else()
     message(STATUS "Tests disabled")
 endif()
 
+add_subdirectory(doc)
 add_subdirectory(src)
