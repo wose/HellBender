@@ -5,10 +5,11 @@
 #include "IO/ModBusClient/ModBusClient.h"
 
 namespace hellbender {
-namespace io {
+namespace io { inline namespace v1 {
 
 ModBusClient::ModBusClient() {
 }
 
+}
 }
 }

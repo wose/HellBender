@@ -6,7 +6,7 @@
 #define HB_MODULES_IO_MODBUSCLIENT_MODBUSCLIENT_H
 
 namespace hellbender {
-namespace io {
+namespace io { inline namespace v1 {
 
 class ModBusClient
 {
@@ -19,6 +19,7 @@ class ModBusClient
 
 };
 
+}
 }
 }
 
