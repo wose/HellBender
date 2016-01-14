@@ -11,3 +11,7 @@ set(core_HDR
 add_definitions(-DHB_BUILD_SHARED)
 
 add_library(hb SHARED ${core_SRC})
+
+target_link_libraries(hb
+  dl
+  )

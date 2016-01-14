@@ -30,5 +30,7 @@ include_directories("${source_dir}/include")
 include_directories("${source_dir}/gtest/include")
 
 include_directories("../src/Modules")
+include_directories("../src/Core")
 
+add_subdirectory(Core)
 add_subdirectory(Modules)

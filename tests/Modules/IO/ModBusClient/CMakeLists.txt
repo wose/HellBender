@@ -9,7 +9,7 @@ target_link_libraries(modbusclient_test
   libgtest
   libgmock
   libhbmodbusclient
-)
+  )
 
 add_test(NAME ModBusClientTest
   COMMAND modbusclient_test)

@@ -1,5 +1,6 @@
 #include "SharedLibrary_UNIX.h"
 #include <dlfcn.h>
+#include <stdexcept>
 
 namespace hellbender {
 
@@ -19,13 +20,13 @@ void SharedLibraryImpl::loadImpl(const std::string& path)
     std::lock_guard<std::mutex> lock(mutex_);
 
     if(handle_)
-        throw 1;
+        throw std::runtime_error("Library handle already in use");
 
     handle_ = dlopen(path.c_str(), RTLD_LAZY);
     if(!handle_)
     {
         const char* err = dlerror();
-        throw 1;
+        throw std::runtime_error(std::string("Failed to open library: ") + err);
     }
     path_ = path;
 }
