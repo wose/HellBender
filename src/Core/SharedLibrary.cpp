@@ -47,7 +47,7 @@ void* SharedLibrary::getSymbol(const std::string& name)
     if(result)
         return result;
     else
-        throw 1;
+        throw std::runtime_error("Symbol not found");
 }
 
 const std::string& SharedLibrary::getPath() const
