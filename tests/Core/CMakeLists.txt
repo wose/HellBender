@@ -4,10 +4,17 @@ set(coretest_SRC
   )
 
 add_executable(core_test ${coretest_SRC})
-
 target_link_libraries(core_test
   libgtest
   libgmock
+  hb
+  )
+
+add_library( TestLib SHARED
+  TestLib.cpp
+  TestPlugin.cpp
+  TestPlugin.h )
+target_link_libraries(TestLib
   hb
   )
 
