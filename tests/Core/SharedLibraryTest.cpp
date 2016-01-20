@@ -32,6 +32,11 @@ TEST_F(ASharedLibrary, CanBeConstructedWithPath) {
     ASSERT_THAT(tLib.isLoaded(), Eq(true));
 }
 
+TEST_F(ASharedLibrary, CanBeUnloaded) {
+    testLib_.unload();
+    ASSERT_THAT(testLib_.isLoaded(), Eq(false));
+}
+
 #ifdef _WIN32
 TEST_F(ASharedLibrary, HasNoSuffixDLLOnWin32) {
     ASSERT_THAT(sharedlibrary_.suffic(), StrEq(".dll"));
@@ -56,6 +61,6 @@ TEST_F(ASharedLibrary, CanCheckIfSymbolExists) {
 }
 
 TEST_F(ASharedLibrary, LoadsSymbolByName) {
-    TheAnswerFunc answerFunc = (TheAnswerFunc) testLib_.getSymbol("theAnswer");
+    TheAnswerFunc answerFunc = (TheAnswerFunc) testLib_.getSymbol(aValidSymbol);
     ASSERT_THAT(answerFunc(), Eq(42));
 }
