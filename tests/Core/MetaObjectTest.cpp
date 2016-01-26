@@ -9,9 +9,19 @@ using namespace ::testing;
 using namespace hellbender;
 
 class Base {
+public:
+    virtual std::string getName()
+    {
+        return "Base";
+    }
 };
 
 class Derivate : public Base {
+public:
+    virtual std::string getName() override
+    {
+        return "Derivate";
+    }
 };
 
 class AMetaObject : public Test
@@ -24,4 +34,12 @@ public:
 
 TEST_F(AMetaObject, HasTheNameOfTheDerivedClass) {
     ASSERT_THAT(metaObject_.className(), Eq(theDerivedClassName));
+}
+
+TEST_F(AMetaObject, HasTheNameOfTheBaseClass) {
+    ASSERT_THAT(metaObject_.baseClassName(), Eq(theBaseClassName));
+}
+
+TEST_F(AMetaObject, ConstructsADerivedObjectAndReturnsBasePointer) {
+    ASSERT_THAT(metaObject_.create()->getName(), Eq("Derivate"));
 }

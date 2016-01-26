@@ -52,7 +52,7 @@ public:
     {
     }
 
-    std::shared_ptr<Base> create() const
+    std::shared_ptr<Base> create() const override
     {
         return std::make_shared<Derived>();
     }
