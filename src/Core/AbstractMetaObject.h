@@ -53,12 +53,11 @@ public:
         AbstractMetaObjectBase::typeidBaseClassName_ = std::string(typeid(Base).name());
     }
 
-    virtual std::shared_ptr<Base> create() const = 0;
+    AbstractMetaObject() = delete;
+    AbstractMetaObject(const AbstractMetaObject&) = delete;
+    AbstractMetaObject& operator = (const AbstractMetaObject&) = delete;
 
-private:
-    AbstractMetaObject();
-    AbstractMetaObject(const AbstractMetaObject&);
-    AbstractMetaObject& operator = (const AbstractMetaObject&);
+    virtual std::shared_ptr<Base> create() const = 0;
 };
 
 }

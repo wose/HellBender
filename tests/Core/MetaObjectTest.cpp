@@ -43,3 +43,11 @@ TEST_F(AMetaObject, HasTheNameOfTheBaseClass) {
 TEST_F(AMetaObject, ConstructsADerivedObjectAndReturnsBasePointer) {
     ASSERT_THAT(metaObject_.create()->getName(), Eq("Derivate"));
 }
+
+TEST_F(AMetaObject, HasNoAssociatedClassLoaderAfterConstruction) {
+    ASSERT_THAT(metaObject_.isOwnedByAnybody(), Eq(false));
+}
+
+TEST_F(AMetaObject, HasUnknownLibraryPathAfterConstruction) {
+    ASSERT_THAT(metaObject_.libraryPath(), StrEq("Unknown"));
+}
