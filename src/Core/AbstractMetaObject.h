@@ -32,45 +32,33 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef HB_CORE_ABSTRACTMETAOBJECTBASE_H
-#define HB_CORE_ABSTRACTMETAOBJECTBASE_H
+#ifndef HB_CORE_ABSTRACTMETAOBJECT_H
+#define HB_CORE_ABSTRACTMETAOBJECT_H
 
-#include <vector>
-#include <string>
+#include "AbstractMetaObjectBase.h"
+
+#include <memory>
+#include <typeinfo>
 
 namespace hellbender {
 
-class ClassLoader;
-using ClassLoaderVector = std::vector<ClassLoader*>;
-
-class AbstractMetaObjectBase
+template <class Base>
+class AbstractMetaObject :
+  public AbstractMetaObjectBase
 {
 public:
-    AbstractMetaObjectBase(const std::string& className, const std::string& baseName);
-    virtual ~AbstractMetaObjectBase();
+    AbstractMetaObject(const std::string& className, const std::string& baseClassName) :
+      AbstractMetaObjectBase(className, baseClassName)
+    {
+        AbstractMetaObjectBase::typeidBaseClassName_ = std::string(typeid(Base).name());
+    }
 
-    std::string className() const;
-    std::string baseClassName() const;
-    std::string typeidBaseClassName() const;
-    std::string libraryPath() const;
+    virtual std::shared_ptr<Base> create() const = 0;
 
-    void setLibraryPath(const std::string& libraryPath);
-    void addClassLoader(ClassLoader* loader);
-    void removeClassLoader(const ClassLoader* loader);
-    bool isOwnedBy(const ClassLoader* loader) const;
-    bool isOwnedByAnybody() const;
-
-    ClassLoaderVector getClassLoaders() const;
-
-protected:
-    virtual void dummy(){}
-
-protected:
-    ClassLoaderVector classLoaders_;
-    std::string libraryPath_;
-    std::string baseClassName_;
-    std::string className_;
-    std::string typeidBaseClassName_;
+private:
+    AbstractMetaObject();
+    AbstractMetaObject(const AbstractMetaObject&);
+    AbstractMetaObject& operator = (const AbstractMetaObject&);
 };
 
 }

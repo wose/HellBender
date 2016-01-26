@@ -4,8 +4,10 @@ set(core_SRC
   )
 
 set(core_HDR
+  AbstractMetaObject.h
   AbstractMetaObjectBase.h
   Core.h
+  MetaObject.h
   SharedLibrary.h
   )
 

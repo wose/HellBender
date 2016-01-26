@@ -32,45 +32,30 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef HB_CORE_ABSTRACTMETAOBJECTBASE_H
-#define HB_CORE_ABSTRACTMETAOBJECTBASE_H
+#ifndef HB_CORE_METAOBJECT_H
+#define HB_CORE_METAOBJECT_H
 
-#include <vector>
+#include "AbstractMetaObject.h"
+
+#include <memory>
 #include <string>
 
 namespace hellbender {
 
-class ClassLoader;
-using ClassLoaderVector = std::vector<ClassLoader*>;
-
-class AbstractMetaObjectBase
+template <class Derived, class Base>
+class MetaObject :
+  public AbstractMetaObject<Base>
 {
 public:
-    AbstractMetaObjectBase(const std::string& className, const std::string& baseName);
-    virtual ~AbstractMetaObjectBase();
+    MetaObject(const std::string& className, const std::string& baseClassName) :
+      AbstractMetaObject<Base>(className, baseClassName)
+    {
+    }
 
-    std::string className() const;
-    std::string baseClassName() const;
-    std::string typeidBaseClassName() const;
-    std::string libraryPath() const;
-
-    void setLibraryPath(const std::string& libraryPath);
-    void addClassLoader(ClassLoader* loader);
-    void removeClassLoader(const ClassLoader* loader);
-    bool isOwnedBy(const ClassLoader* loader) const;
-    bool isOwnedByAnybody() const;
-
-    ClassLoaderVector getClassLoaders() const;
-
-protected:
-    virtual void dummy(){}
-
-protected:
-    ClassLoaderVector classLoaders_;
-    std::string libraryPath_;
-    std::string baseClassName_;
-    std::string className_;
-    std::string typeidBaseClassName_;
+    std::shared_ptr<Base> create() const
+    {
+        return std::make_shared<Derived>();
+    }
 };
 
 }

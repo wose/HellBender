@@ -1,5 +1,6 @@
 set(coretest_SRC
   main.cpp
+  MetaObjectTest.cpp
   SharedLibraryTest.cpp
   )
 
