@@ -39,7 +39,7 @@ TEST_F(ASharedLibrary, CanBeUnloaded) {
 
 #ifdef _WIN32
 TEST_F(ASharedLibrary, HasNoSuffixDLLOnWin32) {
-    ASSERT_THAT(sharedlibrary_.suffic(), StrEq(".dll"));
+    ASSERT_THAT(sharedlibrary_.suffix(), StrEq(".dll"));
 }
 #else
 TEST_F(ASharedLibrary, HasSuffixsoOnUnix) {
