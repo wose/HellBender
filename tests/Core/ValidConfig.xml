@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Machine>
+  <Name>TestMachine</Name>
+
+  <Device id="1000" instance="1">
+  </Device>
+  <Device id="1000" instance="2">
+  </Device>
+  <Device id="1001" instance="1">
+  </Device>
+</Machine>

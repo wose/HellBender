@@ -1,5 +1,6 @@
 set(coretest_SRC
   main.cpp
+  MachineConfigTest.cpp
   MetaObjectTest.cpp
   SharedLibraryTest.cpp
   )
@@ -9,6 +10,7 @@ target_link_libraries(core_test
   libgtest
   libgmock
   hb
+  pugixml
   )
 
 add_library( TestLib SHARED
@@ -21,3 +23,6 @@ target_link_libraries(TestLib
 
 add_test(NAME CoreTest
   COMMAND core_test)
+
+configure_file(ValidConfig.xml ValidConfig.xml COPYONLY)
+configure_file(InvalidConfig.xml InvalidConfig.xml COPYONLY)

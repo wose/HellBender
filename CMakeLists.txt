@@ -18,7 +18,6 @@ option(WITH_MODBUS "Include ModBus support" ON)
 
 # 3rd party libs
 option(BUILD_MODBUS "Build libmodbus from source" WIN32)
-option(BUILD_CONFIG "Build libconfig from source" WIN32)
 
 # build options
 option(ENABLE_SOLUTION_FOLDERS "Solution folder in Visual Studio or in other IDEs" MSVC_IDE)
@@ -42,6 +41,12 @@ endif()
 
 add_definitions(-std=c++11)
 
+include_directories(${CMAKE_SOURCE_DIR}/3rdparty/pugixml/src)
+
+add_subdirectory(3rdparty/pugixml/scripts)
+add_subdirectory(doc)
+add_subdirectory(src)
+
 if (NOT NO_TESTS)
     include(CTest)
     enable_testing()
@@ -49,6 +54,3 @@ if (NOT NO_TESTS)
 else()
     message(STATUS "Tests disabled")
 endif()
-
-add_subdirectory(doc)
-add_subdirectory(src)
