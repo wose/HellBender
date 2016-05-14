@@ -43,7 +43,11 @@ add_definitions(-std=c++11)
 
 include_directories(${CMAKE_SOURCE_DIR}/3rdparty/pugixml/src)
 
-add_subdirectory(3rdparty/pugixml/scripts)
+# build pugixml
+add_library(pugixml STATIC ${CMAKE_SOURCE_DIR}/3rdparty/pugixml/src/pugixml.cpp)
+set_target_properties(pugixml PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
+#add_subdirectory(3rdparty/pugixml/scripts)
 add_subdirectory(doc)
 add_subdirectory(src)
 
