@@ -3,35 +3,21 @@
 // found in the LICENSE file.
 
 #include "gmock/gmock.h"
+#include "MachineConfig.h"
 #include "pugixml.hpp"
 
 #include <string>
 
 using namespace ::testing;
-//using namespace hellbender;
-
-class MachineConfig {
-public:
-    MachineConfig() {
-    }
-
-    MachineConfig(const std::string& path) {
-        auto result = doc_.load_file(path.c_str());
-        if(!result)
-            throw std::runtime_error(result.description());
-    }
-
-private:
-    pugi::xml_document doc_;
-};
+using namespace hellbender;
 
 class AMachineConfig : public Test {
 public:
     MachineConfig machineconfig_;
 
-    const std::string pathToValidConfig = "ValidConfig.xml";
-    const std::string pathToInvalidConfig = "InvalidConfig.xml";
-    const std::string pathToNonExistingConfig = "NonExistingConfig.xml";
+    const char* pathToValidConfig = "ValidConfig.xml";
+    const char* pathToInvalidConfig = "InvalidConfig.xml";
+    const char* pathToNonExistingConfig = "NonExistingConfig.xml";
 };
 
 TEST_F(AMachineConfig, CanBeConstructedWithPath) {
@@ -47,4 +33,12 @@ TEST_F(AMachineConfig, ThrowsWhenConstructedWithInvalidPath) {
 TEST_F(AMachineConfig, ThrowsWhenConstructedWithInvalidConfig) {
     ASSERT_THROW(MachineConfig tMachineConfig(pathToInvalidConfig),
                  std::runtime_error);
+}
+
+TEST_F(AMachineConfig, CanLoadAConfigFile) {
+    machineconfig_.load(pathToValidConfig);
+}
+
+TEST_F(AMachineConfig, CanReturnAListOfDevices) {
+
 }

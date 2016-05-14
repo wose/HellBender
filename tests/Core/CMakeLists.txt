@@ -10,7 +10,6 @@ target_link_libraries(core_test
   libgtest
   libgmock
   hb
-  pugixml
   )
 
 add_library( TestLib SHARED
