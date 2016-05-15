@@ -8,3 +8,5 @@ set(ocvcamera_HDR
 
 add_library(libhbocvcamera SHARED ${ocvcamera_SRC})
 target_link_libraries(libhbocvcamera libhbvscore)
+
+file(COPY ${ocvcamera_HDR} DESTINATION ${CMAKE_BINARY_DIR}/include/hb/VisionSystem/OCVCamera/)

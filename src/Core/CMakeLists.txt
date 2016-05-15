@@ -23,3 +23,4 @@ target_link_libraries(hb
   )
 
 target_link_libraries(hb pugixml)
+file(COPY ${core_HDR} DESTINATION ${CMAKE_BINARY_DIR}/include/hb/)
