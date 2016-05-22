@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "AbstractImageSource.h"
-#include "AbstractImageSink.h"
+#include "ImageSourceBase.h"
+#include "ImageSinkBase.h"
 
 namespace hellbender {
 namespace vs { inline namespace v1 {
 
-void AbstractImageSource::addSink(AbstractImageSink* sink)
+void ImageSourceBase::addSink(ImageSinkBase* sink)
 {
     if(sink) {
         std::lock_guard<std::mutex> lock(sinkListLock_);
@@ -18,7 +18,7 @@ void AbstractImageSource::addSink(AbstractImageSink* sink)
 }
 
 
-void AbstractImageSource::removeSink(AbstractImageSink* sink)
+void ImageSourceBase::removeSink(ImageSinkBase* sink)
 {
     if(sink) {
         std::lock_guard<std::mutex> lock(sinkListLock_);
@@ -27,7 +27,7 @@ void AbstractImageSource::removeSink(AbstractImageSink* sink)
     sinkDisconnected(sink);
 }
 
-cv::Mat AbstractImageSource::getLastImage() const
+cv::Mat ImageSourceBase::getLastImage() const
 {
     return lastImage_;
 }

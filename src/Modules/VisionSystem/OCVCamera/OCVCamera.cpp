@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "VisionSystem/VSCore/AbstractImageSink.h"
+#include "VisionSystem/VSCore/ImageSinkBase.h"
 #include "OCVCamera.h"
 
 #include "spdlog/spdlog.h"
@@ -89,14 +89,14 @@ void OCVCamera::stop()
     }
 }
 
-void OCVCamera::sinkConnected(AbstractImageSink* sink)
+void OCVCamera::sinkConnected(ImageSinkBase* sink)
 {
     if(!isGrabbing_ && videoCapture_.isOpened()) {
         start();
     }
 }
 
-void OCVCamera::sinkDisconnected(AbstractImageSink* sink)
+void OCVCamera::sinkDisconnected(ImageSinkBase* sink)
 {
     if(isGrabbing_ && sinks_.empty())
     {

@@ -1,10 +1,11 @@
 set(vscore_SRC
-  AbstractImageSource.cpp
+  ImageSinkBase.cpp
+  ImageSourceBase.cpp
   )
 
 set(vscore_HDR
-  AbstractImageSource.h
-  AbstractImageSink.h
+  ImageSinkBase.h
+  ImageSourceBase.h
   )
 
 add_library(libhbvscore SHARED ${vscore_SRC} ${vscore_HDR})

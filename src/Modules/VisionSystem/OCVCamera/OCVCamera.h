@@ -10,12 +10,12 @@
 #include <string>
 #include <thread>
 
-#include "VisionSystem/VSCore/AbstractImageSource.h"
+#include "VisionSystem/VSCore/ImageSourceBase.h"
 
 namespace hellbender {
 namespace vs { inline namespace v1 {
 
-class OCVCamera : public AbstractImageSource
+class OCVCamera : public ImageSourceBase
 {
 public:
     OCVCamera();
@@ -30,8 +30,8 @@ public:
     bool isGrabbing() const {return isGrabbing_;}
 
 protected:
-    virtual void sinkConnected(AbstractImageSink* sink) override;
-    virtual void sinkDisconnected(AbstractImageSink* sink) override;
+    virtual void sinkConnected(ImageSinkBase* sink) override;
+    virtual void sinkDisconnected(ImageSinkBase* sink) override;
 
 private:
     void grabbingThread();

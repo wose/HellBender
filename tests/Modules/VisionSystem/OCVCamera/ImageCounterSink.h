@@ -6,13 +6,13 @@
 #define HB_TEST_MODULES_VISIONSYSTEM_OCVCAMERA_IMAGECOUNTERSINK_H
 
 
-#include "VisionSystem/VSCore/AbstractImageSink.h"
+#include "VisionSystem/VSCore/ImageSinkBase.h"
 
 #include <opencv2/opencv.hpp>
 
 using namespace hellbender::vs;
 
-class ImageCounterSink : public AbstractImageSink
+class ImageCounterSink : public ImageSinkBase
 {
  public:
     ImageCounterSink()
