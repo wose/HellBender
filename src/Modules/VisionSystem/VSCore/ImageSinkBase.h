@@ -20,7 +20,7 @@ class ImageSinkBase{
     ImageSinkBase();
     virtual ~ImageSinkBase();
 
-    void connectTo(ImageSourceBase* source);
+    void connectTo(std::weak_ptr<ImageSourceBase> source);
     void disconnect();
     bool isConnected();
     int getSinkID() { return sinkID_;}
@@ -28,7 +28,7 @@ class ImageSinkBase{
     virtual void onNewImage(cv::Mat& image) = 0;
 
  protected:
-    ImageSourceBase* source_ = nullptr;
+    std::weak_ptr<ImageSourceBase> source_;
     static std::atomic<int> lastSinkID_;
     int sinkID_;
 };

@@ -19,8 +19,8 @@ class ImageSourceBase
  public:
     virtual ~ImageSourceBase() {}
 
-    void addSink(ImageSinkBase* sink);
-    void removeSink(ImageSinkBase* sink);
+    void addSink(ImageSinkBase* const sink);
+    void removeSink(ImageSinkBase* const sink);
     virtual cv::Mat getLastImage() const;
 
  protected:

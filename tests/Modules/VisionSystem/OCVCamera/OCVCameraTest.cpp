@@ -13,7 +13,7 @@ using namespace hellbender::vs;
 
 class AOCVCamera : public Test {
 public:
-    OCVCamera ocvcam_;
+    std::shared_ptr<OCVCamera> ocvcam_ = std::make_shared<OCVCamera>();
     ImageCounterSink imageCounterSink_1, imageCounterSink_2;
 
     const char* validVideoFile = "Road1101.mp4";
@@ -21,31 +21,31 @@ public:
 };
 
 TEST_F(AOCVCamera, ThrowsWhenFileNotFound) {
-    ASSERT_THROW(ocvcam_.open(invalidVideoFile), std::runtime_error);
+    ASSERT_THROW(ocvcam_->open(invalidVideoFile), std::runtime_error);
 }
 
 TEST_F(AOCVCamera, CanOpenAVideoFile) {
-    ocvcam_.open(validVideoFile);
+    ocvcam_->open(validVideoFile);
 }
 
 TEST_F(AOCVCamera, StartsGrabbingWhenOpenedAndSinkConnects) {
-    ocvcam_.open(validVideoFile);
-    imageCounterSink_1.connectTo(&ocvcam_);
-    ASSERT_THAT(ocvcam_.isGrabbing(), Eq(true));
+    ocvcam_->open(validVideoFile);
+    imageCounterSink_1.connectTo(ocvcam_);
+    ASSERT_THAT(ocvcam_->isGrabbing(), Eq(true));
 }
 
 TEST_F(AOCVCamera, StartsGrabbingWhenSinksAreConnectedAndOpened) {
-    imageCounterSink_1.connectTo(&ocvcam_);
-    ocvcam_.open(validVideoFile);
-    ASSERT_THAT(ocvcam_.isGrabbing(), Eq(true));
+    imageCounterSink_1.connectTo(ocvcam_);
+    ocvcam_->open(validVideoFile);
+    ASSERT_THAT(ocvcam_->isGrabbing(), Eq(true));
 }
 
 TEST_F(AOCVCamera, StopsGrabbingWhenLastSinkDisconnects) {
-    imageCounterSink_1.connectTo(&ocvcam_);
-    imageCounterSink_2.connectTo(&ocvcam_);
-    ocvcam_.open(validVideoFile);
+    imageCounterSink_1.connectTo(ocvcam_);
+    imageCounterSink_2.connectTo(ocvcam_);
+    ocvcam_->open(validVideoFile);
     imageCounterSink_2.disconnect();
-    ASSERT_THAT(ocvcam_.isGrabbing(), Eq(true));
+    ASSERT_THAT(ocvcam_->isGrabbing(), Eq(true));
     imageCounterSink_1.disconnect();
-    ASSERT_THAT(ocvcam_.isGrabbing(), Eq(false));
+    ASSERT_THAT(ocvcam_->isGrabbing(), Eq(false));
 }

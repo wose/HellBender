@@ -8,22 +8,31 @@
 namespace hellbender {
 namespace vs { inline namespace v1 {
 
-void ImageSourceBase::addSink(ImageSinkBase* sink)
+void ImageSourceBase::addSink(ImageSinkBase* const sink)
 {
-    if(sink) {
+    if(!sink) return;
+
+    {
         std::lock_guard<std::mutex> lock(sinkListLock_);
-        sinks_[sink->getSinkID()]= sink;
+        sinks_.insert({sink->getSinkID(), sink});
     }
+
     sinkConnected(sink);
 }
 
 
-void ImageSourceBase::removeSink(ImageSinkBase* sink)
+void ImageSourceBase::removeSink(ImageSinkBase* const sink)
 {
-    if(sink) {
+    if(!sink) return;
+
+    {
         std::lock_guard<std::mutex> lock(sinkListLock_);
-        sinks_.erase(sink->getSinkID());
+
+        if(!sinks_.empty()) {
+            sinks_.erase(sink->getSinkID());
+        }
     }
+
     sinkDisconnected(sink);
 }
 

@@ -20,30 +20,28 @@ ImageSinkBase::~ImageSinkBase()
     disconnect();
 }
 
-void ImageSinkBase::connectTo(ImageSourceBase* source)
+void ImageSinkBase::connectTo(std::weak_ptr<ImageSourceBase> source)
 {
-    if(source_) {
+    if(source_.lock()) {
         disconnect();
     }
 
-    if(source)
-    {
-        source->addSink(this);
+    if(auto sp = source.lock()) {
         source_ = source;
+        sp->addSink(this);
     }
 }
 
 void ImageSinkBase::disconnect()
 {
-    if(source_) {
-        source_->removeSink(this);
-        source_ = nullptr;
+    if(auto sp = source_.lock()) {
+        sp->removeSink(this);
     }
 }
 
 bool ImageSinkBase::isConnected()
 {
-    return source_ != nullptr;
+     return source_.lock() != nullptr;
 }
 
 }

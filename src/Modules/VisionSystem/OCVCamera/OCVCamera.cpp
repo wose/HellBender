@@ -67,8 +67,7 @@ void OCVCamera::open(const std::string& file)
 
 void OCVCamera::start()
 {
-    if(!isGrabbing_)
-    {
+    if(!isGrabbing_) {
         if(!videoCapture_.isOpened()) {
             throw std::runtime_error("No capture device or file opened");
         }
@@ -98,8 +97,7 @@ void OCVCamera::sinkConnected(ImageSinkBase* sink)
 
 void OCVCamera::sinkDisconnected(ImageSinkBase* sink)
 {
-    if(isGrabbing_ && sinks_.empty())
-    {
+    if(isGrabbing_ && sinks_.empty()) {
         stop();
     }
 }
@@ -107,14 +105,17 @@ void OCVCamera::sinkDisconnected(ImageSinkBase* sink)
 void OCVCamera::grabbingThread()
 {
     while(grabFlag_.test_and_set(std::memory_order_acquire)) {
-        {
-            std::lock_guard<std::mutex> imageLock(imageLock_);
-            videoCapture_ >> lastImage_;
-        }
+        std::lock(imageLock_, sinkListLock_);
+        std::lock_guard<std::mutex> lk1(imageLock_, std::adopt_lock);
+        std::lock_guard<std::mutex> lk2(sinkListLock_, std::adopt_lock);
 
-        std::lock_guard<std::mutex> sinkListLock(sinkListLock_);
-        for(auto& sink : sinks_) {
-            sink.second->onNewImage(lastImage_);
+        try {
+            videoCapture_ >> lastImage_;
+            for(auto& sink : sinks_) {
+                sink.second->onNewImage(lastImage_);
+            }
+        } catch(cv::Exception& e) {
+            std::cerr << e.err << std::endl;
         }
     }
     grabFlag_.clear(std::memory_order_release);
